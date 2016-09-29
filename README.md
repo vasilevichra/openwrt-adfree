@@ -1,13 +1,15 @@
 # openwrt-adfree
-Скрипт генерации hosts.txt на роутерах с OpenWRT для блокировки рекламы. Этот способ позволяет избавиться от рекламы на **ВСЕХ** устройствах (смартфонах, планшетах, smartTV и т.п.) без установки дополнительных плагинов.
+The script for generation hosts.txt on OpenWRT routers for ad blocking.
 
-Роутер должен быть доступен по адресу 192.168.1.1
+This method allows you to get free of advertising on ** ALL ** devices (like smartphones, tablets, SmartTV, etc.) without  installing of additional plug-ins.
 
-Для установки:
+### Requirements
+The router should be available at the address 192.168.1.1
+
+### Installation
 ```sh
 $ git clone https://github.com/vasilevichra/openwrt-adfree.git
 $ cd openwrt-adfree/
 $ ./install
 ```
-
-Включаем youtube на телевизоре и наслаждаемся!
+Run YouTube on SmartTV and enjoy! ^_^
