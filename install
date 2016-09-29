@@ -1,0 +1,23 @@
+#!/bin/bash
+
+SRV='root@192.168.1.1'
+NAME='openwrt-adfree'
+CMD="ssh -x ${SRV}"
+
+# copy script into router
+scp ${NAME} ${SRV}:~
+
+# turn on cron job at 4:00 everyday
+${CMD} "/etc/init.d/cron enable"
+${CMD} "echo '0 4 * * * /root/${NAME}' >> /etc/crontabs/root"
+
+# run script
+${CMD} "/root/${NAME}"
+
+# edit config for new hosts file
+${CMD} "if ! grep -q openwrt-adfree /etc/config/dhcp ; then \
+          sed -i 's/config dnsmasq/config dnsmasq\n\tlist addnhosts \/tmp\/openwrt-adfree/g' /etc/config/dhcp; \
+        fi"
+
+# dns restart to apply changes
+${CMD} "/etc/init.d/dnsmasq restart"
