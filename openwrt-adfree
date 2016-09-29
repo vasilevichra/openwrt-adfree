@@ -7,25 +7,22 @@ DNS_FILE="${DIR}/`basename $0`"
 
 URL_1="http://winhelp2002.mvps.org/hosts.txt"
 URL_2="http://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=0&mimetype=plaintext"
-URL_3="http://hosts-file.net/ad_servers.txt"
+#URL_3="http://hosts-file.net/ad_servers.txt"
 
 LST_1="${DIR}/winhelp2002.mvps.org_hosts.txt"
 LST_2="${DIR}/pgl.yoyo.org_hosts.txt"
-LST_3="${DIR}/hosts-file.net_hosts.txt"
+#LST_3="${DIR}/hosts-file.net_hosts.txt"
 
-wget --quiet ${URL_1} -O ${LST_1}
+wget ${URL_1} -O ${LST_1}
 wget ${URL_2} -O ${LST_2}
-wget ${URL_3} -O ${LST_3}
+#wget ${URL_3} -O ${LST_3}
 
 sed -e 's/^\(.*\).$/\1/' -e 's/#.*$//' -e '/^$/d' -e 's/[ \t]\+/ /' -e 's/0.0.0.0/127.0.0.1/' -e '/ localhost/d' -i ${LST_1}
 sed -e 's/#.*$//' -e '/^$/d' -e 's/[ \t]\+/ /' -e '/ localhost/d' -i ${LST_2}
-sed -e 's/^\(.*\).$/\1/' -e 's/#.*$//' -e '/^$/d' -e 's/[ \t]\+/ /' -e '/ localhost/d' -i ${LST_3}
+#sed -e 's/^\(.*\).$/\1/' -e 's/#.*$//' -e '/^$/d' -e 's/[ \t]\+/ /' -e '/ localhost/d' -i ${LST_3}
 
-cat ${LST_1} ${LST_2} ${LST_3} | uniq > ${DNS_FILE}
+cat ${LST_1} ${LST_2} | uniq > ${DNS_FILE}
 
-rm -f ${LST_1} ${LST_2} ${LST_3}
+rm -f ${LST_1} ${LST_2}
 
 echo "Advertising hosts: `wc -l ${DNS_FILE}`"
-
-/etc/init.d/dnsmasq restart
-
